@@ -10,7 +10,7 @@ class Test:
         assert mul == result
 
     @staticmethod
-    @pytest.mark.parametrize("x, y, result", [(1, 1, 0), (2, 1, 1), (10, 5, 5)])
+    @pytest.mark.parametrize("x, y, result", [(1, 1, 0), (2, 1, 1), (10, 5, 5), (12345, 999, 11346)])
     @pytest.mark.run(order=3)
     def test_subtraction(x, y, result, set_up):
         sub = set_up.subtraction(x, y)
@@ -21,4 +21,4 @@ class Test:
     @pytest.mark.run(order=1)
     def test_division_errors(exception, divider, set_up):
         with pytest.raises(exception):
-            division = set_up.division(5, divider)
+            set_up.division(5, divider)

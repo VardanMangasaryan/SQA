@@ -4,9 +4,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-
 def implicitly_wait(timeout):
-    driver = webdriver.Chrome()
     """Setting wait for driver instance, you need to pass timeout argument in seconds. This wait is set for the entire
     duration of the WebDriver session, meaning it applies to all elements of the webpage that the driver interacts
     with.
@@ -14,6 +12,7 @@ def implicitly_wait(timeout):
     Args:
         timeout: how many seconds do wait   
     """
+    driver = webdriver.Chrome()
     driver.implicitly_wait(timeout)
 
 
@@ -38,6 +37,3 @@ def explicitly_wait(driver, timeout, poll_frequency, ignored_exceptions):
 
     # Wait for element to be present
     wait.until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "selector")))
-
-
-

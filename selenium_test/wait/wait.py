@@ -2,51 +2,53 @@ from selenium.common import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as condition
 
-from selenium_test.wait.get_by import get_by_type
-
 
 class Wait:
 
-    def __init__(self, driver):
+    def __init__(self, driver, timeout):
         self.driver = driver
+        self.wait = WebDriverWait(self.driver, timeout)
 
-    def wait_for_element(self, locator_type, locator,
-                         timeout=10):
+    def wait_for_element(self, *locator):
         element = None
         try:
-            by_type = get_by_type(locator_type)
-            print("Waiting for maximum :: " + str(timeout) +
-                  " :: seconds for element to be visible")
-            wait = WebDriverWait(self.driver, timeout)
-            element = wait.until(condition.visibility_of_element_located((by_type, locator)))
+            print("Waiting for element :: ")
+            element = self.wait.until(condition.visibility_of_element_located(locator))
             print("Element appeared on the web page")
         except NoSuchElementException:
             print("Element not appeared on the web page")
         return element
 
-    def wait_for_element_to_be_clickable(self, locator_type, locator,
-                                         timeout=10):
+    def wait_for_element_to_be_clickable(self, *locator):
         element = None
         try:
-            by_type = get_by_type(locator_type)
-            print("Waiting for maximum :: " + str(timeout) +
-                  " :: seconds for element to be visible")
-            wait = WebDriverWait(self.driver, timeout)
-            element = wait.until(condition.element_to_be_clickable((by_type, locator)))
+            print("Waiting for element :: ")
+            element = self.wait.until(condition.element_to_be_clickable(locator))
             print("Element appeared on the web page")
         except NoSuchElementException:
             print("Element not appeared on the web page")
         return element
 
-    def wait_for_element_to_be_selected(self, element,
-                                        timeout=10):
+    def wait_for_element_to_be_selected(self, element):
         selected_element = None
         try:
-            print("Waiting for maximum :: " + str(timeout) +
-                  " :: seconds for element to be visible")
-            wait = WebDriverWait(self.driver, timeout)
-            selected_element = wait.until(condition.element_selection_state_to_be(element, True))
+            print("Waiting for element ::")
+            selected_element = self.wait.until(condition.element_selection_state_to_be(element, True))
             print("Element appeared on the web page")
         except NoSuchElementException:
             print("Element not appeared on the web page")
         return selected_element
+
+    def wait_for_list_size(self, size, *locator):
+        """
+        Wait for the size of a list of elements to change to a specific value.
+
+        Args
+            locator: a tuple (By.<method>, <selector>) that identifies the list of elements
+            size: an integer representing the expected size of the list of elements
+
+        Raises:
+            TimeoutException if the size of the list of elements does not change to the expected value
+        """
+
+        self.wait.until(lambda: len(self.driver.find_elements(locator)) == size)

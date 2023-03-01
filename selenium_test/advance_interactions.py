@@ -1,25 +1,27 @@
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+
 from selenium_test.wait.wait import Wait
 from selenium.webdriver.support.select import Select
 
-driver = None
-get_wait = None
+driver: WebDriver
+get_wait: Wait
 
 
 def get_url(url):
     global driver, get_wait
     driver = webdriver.Chrome()
     driver.get(url)
-    get_wait = Wait(driver)
+    get_wait = Wait(driver, 10)
 
 
 class TestActions:
 
     def test_scroll(self):
         get_url("https://courses.letskodeit.com/practice")
-        home_element = get_wait.wait_for_element(By.CSS_SELECTOR, 'li[data-id="41191"]')
+        home_element = get_wait.wait_for_element((By.CSS_SELECTOR, 'li[data-id="41191"]'))
 
         # Scroll into element
         driver.execute_script("arguments[0].scrollIntoView();", home_element)
@@ -38,7 +40,7 @@ class TestActions:
 
     def test_checkbox_buttons(self):
         get_url('https://courses.letskodeit.com/practice')
-        bmw_checkbox = get_wait.wait_for_element(By.CSS_SELECTOR, 'input[id="bmwcheck"]')
+        bmw_checkbox = get_wait.wait_for_element((By.CSS_SELECTOR, 'input[id="bmwcheck"]'))
         assert not bmw_checkbox.is_selected()
         bmw_checkbox.click()
         # assert get_wait.wait_for_element_to_be_selected(bmw_checkbox)
@@ -72,7 +74,7 @@ class TestActions:
         cars_select.select_by_visible_text("Benz")
 
         # Returns selected option
-        cars_select.first_selected_option
+        assert cars_select.first_selected_option == "Benz"
 
     def test_hidden_elements(self):
         get_url('https://courses.letskodeit.com/practice')
