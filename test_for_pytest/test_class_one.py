@@ -1,10 +1,19 @@
 import pytest
 
+from for_pytest.maths import MathMethods
+
+
+@pytest.fixture(scope='class')
+def set_up():
+    print("This is set up")
+    return MathMethods()
+
 
 class Test:
+
     @staticmethod
     @pytest.mark.parametrize("x, y, result", [(1, 1, 1), (2, 2, 4), (10, 0, 0)])
-    @pytest.mark.run(order=2)
+    @pytest.mark.run(order=1)
     def test_multiplication(x, y, result, set_up):
         mul = set_up.multiplication(x, y)
         assert mul == result
@@ -18,7 +27,7 @@ class Test:
 
     @staticmethod
     @pytest.mark.parametrize("exception, divider", [(ZeroDivisionError, 0), (TypeError, '2')])
-    @pytest.mark.run(order=1)
+    @pytest.mark.run(order=2)
     def test_division_errors(exception, divider, set_up):
         with pytest.raises(exception):
             set_up.division(5, divider)

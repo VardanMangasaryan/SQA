@@ -1,7 +1,9 @@
+from selenium import webdriver
 import pytest
-from for_pytest.maths import MathMethods
 
 
-@pytest.fixture(scope='class', autouse=True)
-def set_up():
-    return MathMethods()
+@pytest.fixture(scope='session')
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
