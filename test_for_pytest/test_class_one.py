@@ -4,7 +4,7 @@ from for_pytest.maths import MathMethods
 
 
 @pytest.fixture(scope='class')
-def set_up():
+def sett_up():
     print("This is set up")
     return MathMethods()
 
