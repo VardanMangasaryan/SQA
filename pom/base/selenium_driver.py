@@ -1,11 +1,12 @@
-from selenium.webdriver.remote.webdriver import WebDriver
+import os
+import time
 import selenium.common.exceptions as Ex
 
 
 class SeleniumDriver:
     """Not all methods implemented"""
     def __init__(self, driver):
-        self.driver: WebDriver = driver
+        self.driver = driver
 
     def refresh_page(self):
         self.driver.refresh()
@@ -63,3 +64,20 @@ class SeleniumDriver:
                 print("Element is not displayed: Error: " + error)
 
         return displayed
+
+    def take_screenshot(self):
+        file_name = str(round(time.time() * 1000)) + ".png"
+        screenshot_directory = "../screenshots/"
+        relative_file_name = screenshot_directory + file_name
+        current_directory = os.path.dirname(__file__)
+        destination_file = os.path.join(current_directory, relative_file_name)
+        destination_directory = os.path.join(destination_file, screenshot_directory)
+
+        try:
+            if not os.path.exists(destination_directory):
+                os.makedirs(destination_directory)
+            self.driver.save_screenshot(destination_file)
+
+        except:
+            print("### Exception Occurred when taking screenshot ###")
+

@@ -59,7 +59,7 @@ class Wait:
             return self.driver.find_elements(*locator)
         except TimeoutException:
             print(f"Timed out waiting for {size} elements to be present")
-            return []
+            return False
 
     def wait_for_page(self):
         try:

@@ -7,7 +7,6 @@ class LoginPage(BasePage):
 
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver = driver
 
     USERNAME_FIELD = (By.CSS_SELECTOR, 'input[name="username"]')
     PASSWORD_FIELD = (By.CSS_SELECTOR, 'input[name="password"]')

@@ -12,7 +12,6 @@ def set_up(request):
         request.cls.driver = driver
     yield driver
     driver.quit()
-    print("Running one time tearDown")
 
 
 @pytest.fixture

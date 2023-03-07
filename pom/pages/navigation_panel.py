@@ -6,7 +6,6 @@ from pom.base.base_page import BasePage
 class NavigationPanel(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-        self.driver = driver
 
     ROOT_ELEMENT = (By.CSS_SELECTOR, 'nav[aria-label="Sidepanel"]')
     NAVIGATION_ITEMS = (By.CSS_SELECTOR, 'ul[class=oxd-main-menu] > li')

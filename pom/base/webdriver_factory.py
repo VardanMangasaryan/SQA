@@ -20,8 +20,8 @@ class WebDriverFactory:
             'WebDriver Instance'
         """
         URL = "https://opensource-demo.orangehrmlive.com"
-        if self.browser_type == "ie":
-            driver = webdriver.Ie()
+        if self.browser_type == "edge":
+            driver = webdriver.Edge()
         elif self.browser_type == "firefox":
             driver = webdriver.Firefox()
         else:
